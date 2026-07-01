@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jyothi Prakash T — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #10141c;
+    --bg-alt: #0b0e14;
+    --panel: #161c28;
+    --panel-border: #262f42;
+    --text: #e7e9ee;
+    --text-muted: #8b93a7;
+    --amber: #d9a441;
+    --teal: #4fd1c5;
+    --danger: #e0674f;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --radius: 3px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--amber);color:#10141c;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:"//";color:var(--text-muted);}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(16,20,28,.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--panel-border);
+  }
+  nav .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;
+  }
+  .logo{font-family:var(--mono);font-weight:600;font-size:15px;letter-spacing:.02em;}
+  .logo span{color:var(--amber);}
+  nav ul{display:flex;gap:28px;list-style:none;}
+  nav ul li a{
+    font-family:var(--mono);font-size:13px;color:var(--text-muted);
+    transition:color .2s ease;
+  }
+  nav ul li a:hover{color:var(--teal);}
+  .nav-toggle{display:none;background:none;border:1px solid var(--panel-border);color:var(--text);
+    font-family:var(--mono);font-size:12px;padding:6px 10px;border-radius:var(--radius);}
+
+  /* HERO */
+  header.hero{
+    padding:110px 0 90px;
+    background:
+      radial-gradient(circle at 85% 0%, rgba(217,164,65,.08), transparent 45%),
+      var(--bg);
+    border-bottom:1px solid var(--panel-border);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:56px;
+    align-items:center;
+  }
+  h1{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:clamp(34px,4.4vw,52px);
+    line-height:1.08;
+    letter-spacing:-.01em;
+    margin-bottom:14px;
+  }
+  h1 .amber{color:var(--amber);}
+  .role-line{
+    font-size:18px;color:var(--text-muted);margin-bottom:22px;font-weight:500;
+  }
+  .role-line .divider{color:var(--panel-border);margin:0 8px;}
+  .lede{
+    max-width:52ch;color:#c3c8d4;font-size:15.5px;margin-bottom:32px;
+  }
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono);font-size:13px;padding:12px 20px;border-radius:var(--radius);
+    border:1px solid var(--panel-border);transition:all .2s ease;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary{background:var(--amber);color:#14110a;border-color:var(--amber);font-weight:600;}
+  .btn-primary:hover{background:#e8b45e;}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+
+  /* Terminal signature panel */
+  .terminal{
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.6);
+  }
+  .terminal-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:11px 14px;
+    background:var(--bg-alt);
+    border-bottom:1px solid var(--panel-border);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;}
+  .dot.r{background:#e0674f;}
+  .dot.y{background:#d9a441;}
+  .dot.g{background:#4fd1c5;}
+  .terminal-title{font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-left:6px;}
+  .terminal-body{
+    padding:20px 18px;font-family:var(--mono);font-size:12.5px;color:#c3c8d4;
+    min-height:290px;
+  }
+  .terminal-body .cmd{color:var(--teal);}
+  .terminal-body .path{color:var(--text-muted);}
+  .terminal-body pre{white-space:pre-wrap;margin-top:12px;color:#c3c8d4;}
+  .terminal-body .key{color:var(--amber);}
+  .terminal-body .str{color:#9fd68c;}
+  .terminal-body .num{color:var(--teal);}
+  .cursor{display:inline-block;width:7px;height:14px;background:var(--amber);vertical-align:-2px;animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  section{padding:88px 0;}
+  section.alt{background:var(--bg-alt);border-top:1px solid var(--panel-border);border-bottom:1px solid var(--panel-border);}
+  h2{
+    font-family:var(--mono);font-size:26px;font-weight:600;margin-bottom:44px;
+    display:flex;align-items:baseline;gap:12px;
+  }
+  h2 .num{color:var(--text-muted);font-size:15px;}
+
+  /* EXPERIENCE */
+  .job{
+    display:grid;grid-template-columns:200px 1fr;gap:36px;
+    padding:32px 0;border-top:1px solid var(--panel-border);
+  }
+  .job:last-child{border-bottom:1px solid var(--panel-border);}
+  .job-meta{font-family:var(--mono);}
+  .job-dates{color:var(--amber);font-size:13px;margin-bottom:6px;}
+  .job-company{color:var(--text-muted);font-size:13px;}
+  .job-role{font-size:19px;font-weight:600;margin-bottom:14px;}
+  .job ul{padding-left:18px;color:#c3c8d4;font-size:14.5px;}
+  .job li{margin-bottom:8px;}
+  .job li::marker{color:var(--teal);}
+
+  /* PROJECTS */
+  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  .proj-card{
+    background:var(--panel);border:1px solid var(--panel-border);border-radius:6px;
+    padding:26px;transition:transform .2s ease, border-color .2s ease;
+  }
+  .proj-card:hover{transform:translateY(-3px);border-color:var(--amber);}
+  .proj-org{font-family:var(--mono);font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .proj-title{font-size:18px;font-weight:600;margin-bottom:12px;}
+  .proj-card ul{padding-left:16px;color:#aeb4c2;font-size:13.5px;margin-bottom:16px;}
+  .proj-card li{margin-bottom:6px;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    font-family:var(--mono);font-size:11px;padding:4px 9px;border-radius:20px;
+    border:1px solid var(--panel-border);color:var(--teal);
+  }
+
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .skill-card{
+    background:var(--bg);border:1px solid var(--panel-border);border-radius:6px;padding:22px;
+  }
+  .skill-key{font-family:var(--mono);color:var(--amber);font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+  .skill-vals{display:flex;flex-wrap:wrap;gap:7px;font-family:var(--mono);font-size:12px;}
+  .skill-vals span{color:#c3c8d4;}
+  .skill-vals span:not(:last-child)::after{content:",";color:var(--text-muted);}
+
+  /* ACHIEVEMENTS */
+  .ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .ach-card{border-left:2px solid var(--amber);padding:6px 0 6px 18px;}
+  .ach-card p{color:#c3c8d4;font-size:14px;}
+
+  /* EDU + CONTACT */
+  .edu{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;
+    border:1px solid var(--panel-border);border-radius:6px;padding:22px 26px;background:var(--panel);}
+  .edu-school{font-size:17px;font-weight:600;}
+  .edu-degree{color:var(--text-muted);font-size:13.5px;font-family:var(--mono);margin-top:4px;}
+  .edu-gpa{font-family:var(--mono);color:var(--amber);font-size:13px;}
+
+  footer{padding:64px 0 40px;text-align:center;}
+  footer .eyebrow{justify-content:center;}
+  .contact-links{display:flex;justify-content:center;gap:26px;margin-top:18px;flex-wrap:wrap;}
+  .contact-links a{font-family:var(--mono);font-size:13.5px;color:var(--text-muted);border-bottom:1px solid transparent;}
+  .contact-links a:hover{color:var(--teal);border-color:var(--teal);}
+  .foot-note{margin-top:40px;font-family:var(--mono);font-size:11px;color:#4a5164;}
+
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .job{grid-template-columns:1fr;gap:12px;}
+    .proj-grid{grid-template-columns:1fr;}
+    .skills-grid{grid-template-columns:1fr 1fr;}
+    .ach-grid{grid-template-columns:1fr;}
+    nav ul{display:none;}
+  }
+  @media (max-width:520px){
+    .skills-grid{grid-template-columns:1fr;}
+    .wrap{padding:0 20px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .cursor{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">JYOTHI<span>.</span>PRAKASH</div>
+    <ul>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">available for opportunities</div>
+      <h1>Jyothi Prakash T<br><span class="amber">builds backend systems</span> that don't fall over.</h1>
+      <div class="role-line">Full Stack Developer <span class="divider">/</span> MERN Stack & Laravel</div>
+      <p class="lede">2.9+ years shipping enterprise ERP modules, REST APIs, and role-based auth systems — with a habit of finding the N+1 query before it finds you, and a Redis cache ready when it does.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="mailto:jyothiprakash1812@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="Jyothi_Prakash_Resume.pdf" download>Download resume ↓</a>
+        <a class="btn btn-ghost" href="#experience">See the work</a>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="terminal-title">jyothi@dev — GET /api/developer</div>
+      </div>
+      <div class="terminal-body" id="termBody"></div>
+    </div>
+  </div>
+</header>
+
+<section id="experience">
+  <div class="wrap">
+    <h2><span class="num">01</span> Experience</h2>
+
+    <div class="job">
+      <div class="job-meta">
+        <div class="job-dates">Jul 2025 — Present</div>
+        <div class="job-company">Elroi Software Solutions</div>
+      </div>
+      <div>
+        <div class="job-role">Software Developer</div>
+        <ul>
+          <li>Developing scalable ERP solutions using Laravel and PostgreSQL for business process automation.</li>
+          <li>Improved application performance by optimizing database queries, resolving N+1 issues, and implementing caching strategies — reducing API response times by up to 80%.</li>
+          <li>Refactored core modules using Service and Repository patterns, improving maintainability and scalability.</li>
+          <li>Designed and implemented secure backend workflows for CRM, Payroll, Sales, Purchase, and Task Management modules.</li>
+          <li>Collaborated with cross-functional teams to deliver production-ready enterprise applications.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-meta">
+        <div class="job-dates">Sep 2023 — Jun 2025</div>
+        <div class="job-company">SKATTECH IT Services</div>
+      </div>
+      <div>
+        <div class="job-role">Software Developer</div>
+        <ul>
+          <li>Developed full-stack applications using MERN Stack and Laravel with TypeScript support.</li>
+          <li>Built secure RESTful APIs with JWT authentication and role-based authorization mechanisms.</li>
+          <li>Designed responsive user interfaces using React.js, Redux Toolkit, Axios, and modern React Hooks.</li>
+          <li>Implemented scalable backend services using Node.js, Express.js, MongoDB, and MySQL.</li>
+          <li>Collaborated with development teams to deliver maintainable, business-focused software solutions.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="projects">
+  <div class="wrap">
+    <h2><span class="num">02</span> Projects</h2>
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <div class="proj-org">Elroi Software Solutions</div>
+        <div class="proj-title">Abacux — ERP Accounting Software</div>
+        <ul>
+          <li>CRM, Payroll, Sales, Purchase, and Task Management modules.</li>
+          <li>Payroll workflows: salary processing, deductions, payslip generation.</li>
+          <li>Query and caching optimizations for application performance.</li>
+          <li>Business logic refactored with Service and Repository architecture.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">Laravel</span><span class="tag">PostgreSQL</span><span class="tag">GitHub Actions</span><span class="tag">jQuery</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-org">SKATTECH IT Services</div>
+        <div class="proj-title">School Management System</div>
+        <ul>
+          <li>Multi-role platform for students, teachers, and staff.</li>
+          <li>Secure auth with role-based access control.</li>
+          <li>Razorpay integration for online fee collection.</li>
+          <li>WebSocket-based real-time updates.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">React.js</span><span class="tag">Node.js</span><span class="tag">MongoDB</span><span class="tag">TypeScript</span><span class="tag">AWS S3</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-org">SKATTECH IT Services</div>
+        <div class="proj-title">Food Ordering Platform</div>
+        <ul>
+          <li>Full ordering flow: auth, cart management, order tracking.</li>
+          <li>Search, filtering, pagination, and product management.</li>
+          <li>MongoDB indexing and Mongoose query optimization.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">React.js</span><span class="tag">Express.js</span><span class="tag">Redux Toolkit</span><span class="tag">JWT</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-org">SKATTECH IT Services</div>
+        <div class="proj-title">Taxi Booking Application</div>
+        <ul>
+          <li>Multi-role system: Admin, Vendor, Driver operations.</li>
+          <li>Ride booking, bidding, acceptance, real-time tracking.</li>
+          <li>APIs optimized with Laravel Eloquent ORM.</li>
+          <li>CI/CD pipelines via GitHub Actions.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">GitHub Actions</span><span class="tag">jQuery</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2><span class="num">03</span> Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-key">frontend</div>
+        <div class="skill-vals"><span>React.js</span><span>React Native</span><span>Redux Toolkit</span><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>TypeScript</span><span>jQuery</span><span>Formik</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-key">backend</div>
+        <div class="skill-vals"><span>Node.js</span><span>Express.js</span><span>PHP</span><span>Laravel</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-key">databases</div>
+        <div class="skill-vals"><span>MongoDB</span><span>PostgreSQL</span><span>MySQL</span><span>SQLite</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-key">api &amp; auth</div>
+        <div class="skill-vals"><span>REST APIs</span><span>GraphQL</span><span>JWT</span><span>RBAC</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-key">devops &amp; tools</div>
+        <div class="skill-vals"><span>GitHub Actions</span><span>AWS S3</span><span>Git</span><span>JIRA</span><span>Postman</span><span>CI/CD</span><span>Redis</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-key">ai tools</div>
+        <div class="skill-vals"><span>GitHub Copilot</span><span>Cursor AI</span><span>AI-Assisted Dev</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2><span class="num">04</span> Achievements</h2>
+    <div class="ach-grid">
+      <div class="ach-card"><p>Integrated skeleton loading for smooth page transitions, cutting perceived slowness across the app.</p></div>
+      <div class="ach-card"><p>Implemented lazy loading and on-demand data fetching to reduce initial page load time.</p></div>
+      <div class="ach-card"><p>Reduced DOM weight by restructuring component trees for faster rendering and runtime performance.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">05</span> Education</h2>
+    <div class="edu">
+      <div>
+        <div class="edu-school">Kongu Engineering College, Perundurai</div>
+        <div class="edu-degree">M.Sc. Software Systems · 2019 – 2024</div>
+      </div>
+      <div class="edu-gpa">CGPA 7.2</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="eyebrow">get in touch</div>
+    <h2 style="justify-content:center;">Let's build something reliable.</h2>
+    <div class="contact-links">
+      <a href="mailto:jyothiprakash1812@gmail.com">jyothiprakash1812@gmail.com</a>
+      <a href="tel:+919629017245">+91 96290 17245</a>
+      <a href="#">India</a>
+    </div>
+    <div class="foot-note">© 2026 Jyothi Prakash T. Built with HTML &amp; CSS.</div>
+  </div>
+</footer>
+
+<script>
+  const lines = [
+    { t: 'cmd', text: 'curl' },
+    { t: 'path', text: ' /api/v1/developer/jyothi-prakash' }
+  ];
+
+  const body = document.getElementById('termBody');
+  const cmdLine = document.createElement('div');
+  body.appendChild(cmdLine);
+
+  const jsonPre = document.createElement('pre');
+  jsonPre.style.display = 'none';
+  body.appendChild(jsonPre);
+
+  const fullCmd = '$ curl /api/v1/developer/jyothi-prakash';
+  let i = 0;
+
+  function typeCmd(){
+    if(i <= fullCmd.length){
+      cmdLine.innerHTML = fullCmd.slice(0,i).replace('$ ','<span style="color:#8b93a7">$ </span>') + '<span class="cursor"></span>';
+      i++;
+      setTimeout(typeCmd, 28);
+    } else {
+      cmdLine.querySelector('.cursor')?.remove();
+      setTimeout(showJson, 260);
+    }
+  }
+
+  function showJson(){
+    jsonPre.style.display = 'block';
+    jsonPre.innerHTML =
+`{
+  <span class="key">"name"</span>: <span class="str">"Jyothi Prakash T"</span>,
+  <span class="key">"role"</span>: <span class="str">"Full Stack Developer"</span>,
+  <span class="key">"experience_years"</span>: <span class="num">2.9</span>,
+  <span class="key">"stack"</span>: [<span class="str">"MERN"</span>, <span class="str">"Laravel"</span>],
+  <span class="key">"current_company"</span>: <span class="str">"Elroi Software Solutions"</span>,
+  <span class="key">"perf_gain"</span>: <span class="str">"API latency -80%"</span>,
+  <span class="key">"caching"</span>: <span class="str">"Redis"</span>,
+  <span class="key">"status"</span>: <span class="str">"open_to_work"</span>
+}`;
+  }
+
+  typeCmd();
+</script>
+
+</body>
+</html>
